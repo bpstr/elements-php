@@ -1,0 +1,15 @@
+{
+    "name": "bpstr/elements-php",
+    "license": "MIT",
+    "description": "A simple PHP library to render HTML elements.",
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {"Bpstr\\Elements\\": "src/"}
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}

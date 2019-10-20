@@ -35,6 +35,10 @@ abstract class StringCollection {
 		return $this->storage[$key] ?? $default;
 	}
 
+	public function &ref($key) {
+		return $this->storage[$key];
+	}
+
 	public function list() {
 		return $this->storage;
 	}

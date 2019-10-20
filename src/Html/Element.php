@@ -159,7 +159,18 @@ class Element extends Markup implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public function attr(string $attr, $value = NULL): ElementInterface {
-		$this->attributes->set($attr, $value);
+		$this->setAttribute($attr, $value);
+		return $this;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function attributes(iterable $attributes): ElementInterface {
+		foreach ($attributes as $name => $value) {
+			$this->setAttribute($name, $value);
+		}
+
 		return $this;
 	}
 

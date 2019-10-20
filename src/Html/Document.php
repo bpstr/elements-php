@@ -6,6 +6,22 @@ use Bpstr\Elements\Base\Markup;
 
 class Document extends Markup {
 
+	public static function create(string $title, $content = NULL, iterable $attributes = []) {
+		$markup = new static($title);
+
+		// Add content if exists.
+		if ($content !== NULL) {
+			$markup->body(self::CKEY_DEFAULT_CONTENT, $content);
+		}
+
+		// Add element attributes.
+		foreach ($attributes as $name => $value) {
+			$markup->attr($name, $value);
+		}
+
+		return $markup;
+	}
+
 	public function __construct(string $title, string $lang = 'en') {
 		parent::__construct('html');
 		$this->before = '<!DOCTYPE html>';

@@ -2,53 +2,27 @@
 
 declare(strict_types=1);
 
-use Bpstr\Elements\Html\Document;
-use Bpstr\Elements\Html\Element;
+use Bpstr\Elements\Html\Anchor;
 use PHPUnit\Framework\TestCase;
 
-final class DocumentTest extends TestCase {
+final class AnchorTest extends TestCase {
 
-	public function testDocument(): void {
-		$document = new Document('Some title');
-		$document->title('HTML5');
-		$document->attr('lang', 'en');
-
+	public function testAnchor(): void {
+		$anchor = new Anchor('#', Anchor::TARGET_BLANK);
+		$anchor->content(Anchor::CKEY_DEFAULT_CONTENT, 'This is a link.');
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>HTML5</title></head><body></body></html>',
-			(string) $document
+			'<a href="#" target="_blank">This is a link.</a>',
+			(string) $anchor
 		);
 	}
 
-	public function testDocumentCreate() {
-		$document = Document::create('Document Title', 'Lorem ipsum');
+	public function testAnchorCreate(): void {
+		$anchor = Anchor::create('#', 'This is a link.');
+		$anchor->target(Anchor::TARGET_BLANK);
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>Document Title</title></head><body>Lorem ipsum</body></html>',
-			(string) $document
+			'<a href="#" target="_blank">This is a link.</a>',
+			(string) $anchor
 		);
 	}
-
-	public function testDocumentHead(): void {
-		$document = new Document('HTML5');
-
-		$document->head('meta', Element::create('meta', NULL, ['value' => 'ROBOTS']));
-
-		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>HTML5</title><meta value="ROBOTS" /></head><body></body></html>',
-			(string) $document
-		);
-	}
-
-	public function testDocumentBody(): void {
-		$document = new Document('HTML');
-		$document->title('HTML5');
-
-		$document->body('content', Element::create('div', 'Lorem ipsum.'));
-
-		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>HTML5</title></head><body><div>Lorem ipsum.</div></body></html>',
-			(string) $document
-		);
-	}
-
 
 }

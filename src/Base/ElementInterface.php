@@ -90,7 +90,12 @@ interface ElementInterface extends MarkupInterface {
 	 */
 	public function getChildrenByTagname(string $tag): array;
 
-
+	/**
+	 * @param iterable $attributes
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function attributes(iterable $attributes): self;
 
 	/**
 	 * @return \Bpstr\Elements\Base\ElementAttributeCollection

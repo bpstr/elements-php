@@ -30,6 +30,10 @@ class ElementAttributeCollection extends StringCollection {
 			throw new InvalidArgumentException('Only scalar values are accepted as attributes');
 		}
 
+		if ($content === true) {
+			$content = $key;
+		}
+
 		if ($key === 'class') {
 			$this->classCollection->add($content);
 		}

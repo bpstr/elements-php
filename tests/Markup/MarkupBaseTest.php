@@ -13,7 +13,7 @@ final class MarkupBaseTest extends TestCase {
 		$markup->content('title', Markup::create('title', 'Lorem ipsum.'));
 
 		$this->assertSame(
-			'<document created="2019-10-19"><title>Lorem ipsum.</title></document>',
+			'<document created="' . date('Y-m-d') . '"><title>Lorem ipsum.</title></document>',
 			(string) $markup
 		);
 	}

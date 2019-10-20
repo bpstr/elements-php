@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 final class DocumentTest extends TestCase {
 
 	public function testDocument(): void {
-		$document = new Document();
+		$document = new Document('Some title');
 		$document->title('HTML5');
 		$document->attr('lang', 'en');
 

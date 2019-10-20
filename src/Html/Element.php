@@ -59,7 +59,7 @@ class Element extends Markup implements ElementInterface {
 	/**
 	 * @var ExtensionInterface[]
 	 */
-	protected $extensions;
+	protected $extensions = [];
 
 
 	/**
@@ -304,7 +304,7 @@ class Element extends Markup implements ElementInterface {
 		];
 
 		foreach ($this->extensions as $extension) {
-			$extension->handle($this, __FUNCTION__);
+			$extension->handle($this);
 		}
 
 		$is_empty_html_tag = in_array($this->tag, self::EMPTY_ELEMENTS, true);

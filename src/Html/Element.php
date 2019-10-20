@@ -9,16 +9,11 @@ use Bpstr\Elements\Base\ElementInterface;
 use Bpstr\Elements\Base\ElementStyleCollection;
 use Bpstr\Elements\Base\Markup;
 use Bpstr\Elements\Base\MarkupInterface;
+use Bpstr\Elements\Extension\ExtensionInterface;
 
 /**
  * Abstract HTML element class for Bootstrap components.
  * Original: https://github.com/bpstr/elements-php
- *
- * @bpstr Project Lifera <bpstr@gmx.tm>
- *
- * @todo: __call check element attributes and return/set value if exists
- * @todo: Add HTML Event Attributes: https://www.w3schools.com/tags/ref_eventattributes.asp
- * @todo: Parse HTML element
  */
 class Element extends Markup implements ElementInterface {
 	public const CKEY_DEFAULT_CONTENT = 0xF0000;
@@ -26,7 +21,6 @@ class Element extends Markup implements ElementInterface {
 	/**
 	 * @var array
 	 * 	 Collection of emlements to render without a closing tag.
-	 * @todo HtmlElementInterface
 	 */
 	public const EMPTY_ELEMENTS = ['base', 'area', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
@@ -61,6 +55,11 @@ class Element extends Markup implements ElementInterface {
 	 * @var \Bpstr\Elements\Base\ElementAttributeCollection
 	 */
 	protected $attributes;
+
+	/**
+	 * @var ExtensionInterface[]
+	 */
+	protected $extensions;
 
 
 	/**
@@ -281,6 +280,18 @@ class Element extends Markup implements ElementInterface {
 		return $this->attributes->style()->has($property);
 	}
 
+
+
+	public function attachExtension(string $key, ExtensionInterface $extension) {
+		$this->extensions[] = $extension;
+	}
+
+	public function detachExtension(string $key) {
+		unset($this->extensions[$key]);
+	}
+
+
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -291,6 +302,10 @@ class Element extends Markup implements ElementInterface {
 			'content' => NULL,
 			'closing' => NULL,
 		];
+
+		foreach ($this->extensions as $extension) {
+			$extension->handle($this, __FUNCTION__);
+		}
 
 		$is_empty_html_tag = in_array($this->tag, self::EMPTY_ELEMENTS, true);
 		$first_tag_closing = $is_empty_html_tag ? '/' : '';

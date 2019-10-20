@@ -2,6 +2,7 @@
 
 namespace Bpstr\Elements\Base;
 
+use Bpstr\Elements\Extension\ExtensionInterface;
 use JsonSerializable;
 use Serializable;
 
@@ -201,6 +202,10 @@ interface ElementInterface extends MarkupInterface {
 	public function hasStyle(string $property): bool;
 
 
+
+	public function attachExtension(string $key, ExtensionInterface $extension);
+
+	public function detachExtension(string $key);
 
 	/**
 	 * Renders an HTML element as string.

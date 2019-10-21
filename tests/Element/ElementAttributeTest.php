@@ -113,4 +113,39 @@ final class ElementAttributeTest extends TestCase {
 		);
 	}
 
+	public function testElementDataAttributes() {
+		$img = Element::create('img', NULL, ['src' => 'image.jpg', 'data-src' => 'image-full.jpg']);
+		$img->data('lazyload', 'on');
+
+		$this->assertSame(
+			'<img src="image.jpg" data-src="image-full.jpg" data-lazyload="on" />',
+			(string) $img
+		);
+	}
+
+	public function testElementGetAttributes() {
+		$div = Element::create('div', 'Loripsum.', ['id' => 'test', 'class' => 'row']);
+		$div->setAttribute('style', 'width: 2%');
+
+		$this->assertArrayHasKey(
+			'id',
+			$div->getAttributes()->list()
+		);
+
+		$this->assertArrayHasKey(
+			'class',
+			$div->getAttributes()->list()
+		);
+
+		$this->assertArrayHasKey(
+			'style',
+			$div->getAttributes()->list()
+		);
+
+		$this->assertSame(
+			'<div id="test" class="row" style="width: 2%;">Loripsum.</div>',
+			(string) $div
+		);
+	}
+
 }

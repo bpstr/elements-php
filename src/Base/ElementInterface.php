@@ -3,8 +3,6 @@
 namespace Bpstr\Elements\Base;
 
 use Bpstr\Elements\Extension\ExtensionInterface;
-use JsonSerializable;
-use Serializable;
 
 /**
  * Basic HTML Element interface.

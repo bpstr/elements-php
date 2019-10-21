@@ -164,7 +164,7 @@ class Markup implements MarkupInterface {
 		}
 
 		if ($this->wrap instanceof MarkupInterface) {
-			return (string) $this->wrap->content(self::CKEY_DEFAULT_CONTENT, $element);
+			return (string) $this->wrap->content(self::CKEY_DEFAULT_CONTENT, implode($element));
 		}
 
 		return implode($element);

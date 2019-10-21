@@ -12,6 +12,16 @@ final class ElementBaseTest extends TestCase {
 		Element::create('');
 	}
 
+	public function testElementSetTag(): void {
+		$div = Element::create('div');
+		$div->setTag('p');
+
+		$this->assertSame(
+			'<p></p>',
+			(string) $div
+		);
+	}
+
 	public function testElementWithoutContent(): void {
 		$div = Element::create('div');
 

@@ -20,9 +20,9 @@ final class DocumentTest extends TestCase {
 	}
 
 	public function testDocumentCreate() {
-		$document = Document::create('Document Title', 'Lorem ipsum');
+		$document = Document::create('Document Title', 'Lorem ipsum', ['lang' => 'fr']);
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>Document Title</title></head><body>Lorem ipsum</body></html>',
+			'<!DOCTYPE html><html lang="fr"><head><title>Document Title</title></head><body>Lorem ipsum</body></html>',
 			(string) $document
 		);
 	}

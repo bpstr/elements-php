@@ -146,7 +146,7 @@ class Element extends Markup implements ElementInterface {
 	 */
 	public function getChildrenByTagname(string $tag): array {
 		$results = array();
-		foreach ($this->contents as $key => $child) {
+		foreach ($this->contents->list() as $key => $child) {
 			if ($child instanceof MarkupInterface && $child->tag === $tag) {
 				$results[$key] = $child;
 			}
@@ -350,7 +350,7 @@ class Element extends Markup implements ElementInterface {
 		}
 
 		if ($this->wrap instanceof ElementInterface) {
-			return (string) $this->wrap->content(self::CKEY_DEFAULT_CONTENT, $element);
+			return (string) $this->wrap->content(self::CKEY_DEFAULT_CONTENT, implode($element));
 		}
 
 		return implode($element);

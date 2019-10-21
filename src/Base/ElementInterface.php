@@ -32,6 +32,11 @@ interface ElementInterface extends MarkupInterface {
 	public static function create (string $tag, $content = NULL, iterable $attributes = []) ;
 
 	/**
+	 * @return string
+	 */
+	public function getTag(): string;
+
+	/**
 	 * Set tag of an element
 	 *
 	 * @param string $tag
@@ -206,9 +211,9 @@ interface ElementInterface extends MarkupInterface {
 
 
 
-	public function attachExtension(string $key, ExtensionInterface $extension);
+	public function attachExtension(ExtensionInterface $extension);
 
-	public function detachExtension(string $key);
+	public function detachExtension(string $name);
 
 	/**
 	 * Renders an HTML element as string.

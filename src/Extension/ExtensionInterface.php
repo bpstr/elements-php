@@ -6,6 +6,6 @@ use Bpstr\Elements\Base\ElementInterface;
 
 interface ExtensionInterface {
 
-	public function handle(ElementInterface $element);
+	public function __invoke(ElementInterface $element);
 
 }

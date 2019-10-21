@@ -9,7 +9,7 @@ abstract class StringCollection {
 
 	protected $storage = [];
 
-	public function __construct(array $elements = []) {
+	public function __construct(iterable $elements = []) {
 		foreach ($elements as $index => $element) {
 			$this->set($index, $element);
 		}

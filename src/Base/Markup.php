@@ -201,4 +201,16 @@ class Markup implements MarkupInterface {
 		}
 	}
 
+	public function __clone() {
+		if ($this->before instanceof MarkupInterface) {
+			$this->before = clone $this->before;
+		}
+		if ($this->after instanceof MarkupInterface) {
+			$this->after = clone $this->after;
+		}
+		if ($this->wrap instanceof MarkupInterface) {
+			$this->wrap = clone $this->wrap;
+		}
+	}
+
 }

@@ -148,4 +148,24 @@ final class ElementAttributeTest extends TestCase {
 		);
 	}
 
+	public function testElementStyleMethods() {
+		$div = Element::create('div', 'Loripsum.');
+		$div->style('width', '15%');
+		$div->setStyle('height', '25%');
+
+		$this->assertArrayHasKey(
+			'width',
+			$div->getStyles()->list()
+		);
+
+		$this->assertTrue(
+			$div->hasStyle('height')
+		);
+
+		$this->assertSame(
+			'<div style="width: 15%; height: 25%;">Loripsum.</div>',
+			(string) $div
+		);
+	}
+
 }

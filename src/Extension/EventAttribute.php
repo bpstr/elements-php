@@ -11,7 +11,7 @@ class EventAttribute extends ExtensionBase {
 	 */
 	protected $events = [];
 
-	public function handle(ElementInterface $element) {
+	public function __invoke(ElementInterface $element) {
 		foreach ($this->events as $attribute => $event) {
 			$element->attr($attribute, $event);
 		}
@@ -21,6 +21,5 @@ class EventAttribute extends ExtensionBase {
 		$this->events['onclick'] = $value;
 		return $this;
 	}
-
 
 }

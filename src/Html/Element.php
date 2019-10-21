@@ -68,10 +68,7 @@ class Element extends Markup implements ElementInterface {
 	public static function create (string $tag, $content = NULL, iterable $attributes = []) {
 		$element = new static($tag);
 
-		// Add content if exists.
-		if ($content !== NULL) {
-			$element->content(self::CKEY_DEFAULT_CONTENT, $content);
-		}
+		$element->prepareContent($content);
 
 		// Add element attributes.
 		foreach ($attributes as $name => $value) {
@@ -93,6 +90,15 @@ class Element extends Markup implements ElementInterface {
 		$this->attributes = new ElementAttributeCollection();
 	}
 
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getTag(): string {
+		return $this->tag;
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -102,6 +108,22 @@ class Element extends Markup implements ElementInterface {
 	}
 
 
+
+	/**
+	 * @param $content
+	 */
+	protected function prepareContent($content) {
+		if ($content === NULL) {
+			return;
+		}
+
+		if ($content instanceof ElementContentCollection) {
+			$this->contents = $content;
+			return;
+		}
+
+		$this->content(self::CKEY_DEFAULT_CONTENT, $content);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -293,12 +315,12 @@ class Element extends Markup implements ElementInterface {
 
 
 
-	public function attachExtension(string $key, ExtensionInterface $extension) {
-		$this->extensions[] = $extension;
+	public function attachExtension(ExtensionInterface $extension) {
+		$this->extensions[get_class($extension)] = $extension;
 	}
 
-	public function detachExtension(string $key) {
-		unset($this->extensions[$key]);
+	public function detachExtension(string $name) {
+		unset($this->extensions[$name]);
 	}
 
 
@@ -315,14 +337,14 @@ class Element extends Markup implements ElementInterface {
 		];
 
 		foreach ($this->extensions as $extension) {
-			$extension->handle($this);
+			$extension($this);
 		}
 
 		$is_empty_html_tag = in_array($this->tag, self::EMPTY_ELEMENTS, true);
 		$first_tag_closing = $is_empty_html_tag ? '/' : '';
 
 		if ($is_empty_html_tag && $this->contents->count()) {
-			array_unshift($element, '<!-- Content dismissed in empty element with value attribute set (' .$this->tag .' : ' .var_export($this->contents, true). '-->');
+			array_unshift($element, sprintf('<!-- Content dismissed in empty element: "%s" -->', $this->tag));
 		}
 
 		$opening_tag_contents = [$this->tag];
@@ -354,6 +376,12 @@ class Element extends Markup implements ElementInterface {
 		}
 
 		return implode($element);
+	}
+
+	function __clone() {
+		$this->attributes = clone $this->attributes;
+		$this->contents = clone $this->contents;
+		parent::__clone();
 	}
 
 }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Bpstr\Elements\Base\ElementContentCollection;
 use Bpstr\Elements\Html\Element;
 use PHPUnit\Framework\TestCase;
 
@@ -89,6 +90,23 @@ final class ElementContentTest extends TestCase {
 		$this->assertSame(
 			'<div>Lorem ipsum.<p>First paragraph.</p><hr /><p>Second paragraph.</p></div>',
 			(string) $element
+		);
+	}
+
+	public function testEmptyElementContents() {
+		$img = Element::create('hr', 'Test content');
+		$this->assertSame(
+			'<!-- Content dismissed in empty element: "hr" --><hr />',
+			(string) $img
+		);
+	}
+
+	public function testElementContentWrapper() {
+		$contents = new ElementContentCollection(['Paragraph', 'Wrapped'], Element::create('p'));
+
+		$this->assertSame(
+			'<p>Paragraph</p><p>Wrapped</p>',
+			(string) $contents
 		);
 	}
 

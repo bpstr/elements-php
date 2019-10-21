@@ -10,7 +10,7 @@ namespace Bpstr\Elements\Html;
  */
 class Image extends Element {
 
-	public $tag = 'img';
+	protected $tag = 'img';
 
 	public static function create(string $src, $alt = NULL, iterable $attributes = []) {
 		return (new static($src, $alt))->attributes($attributes);

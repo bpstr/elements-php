@@ -19,7 +19,7 @@ class Table extends Element {
 
 	public $tag = 'table';
 
-	public static function create(string $caption, $content = NULL, iterable $attributes = []) {
+	public static function build(string $caption, $content = NULL, iterable $attributes = []) {
 		$table = new static($content);
 		$table->caption($caption);
 		$table->attributes($attributes);

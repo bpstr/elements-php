@@ -224,4 +224,6 @@ interface ElementInterface extends MarkupInterface {
 
 	public function __toString();
 
+	public function __invoke($key, $content);
+
 }

@@ -3,6 +3,7 @@
 namespace Bpstr\Elements\Base;
 
 use Exception;
+use InvalidArgumentException;
 
 /**
  * Simple SGTML markup element for Elements-php.
@@ -73,7 +74,7 @@ class Markup implements MarkupInterface {
 	 */
 	public function __construct(string $tag) {
 		if ($tag === '') {
-			throw new \InvalidArgumentException('Markup tag must not be empty!');
+			throw new InvalidArgumentException('Markup tag must not be empty!');
 		}
 		$this->tag = $tag;
 	}
@@ -211,6 +212,11 @@ class Markup implements MarkupInterface {
 		if ($this->wrap instanceof MarkupInterface) {
 			$this->wrap = clone $this->wrap;
 		}
+	}
+
+	public function __invoke($key, $content) {
+		$this->content($key, $content);
+		return $this;
 	}
 
 }

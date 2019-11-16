@@ -17,7 +17,7 @@ final class AnchorTest extends TestCase {
 	}
 
 	public function testAnchorCreate(): void {
-		$anchor = Anchor::create('#', 'This is a link.');
+		$anchor = Anchor::build('#', 'This is a link.');
 		$anchor->target(Anchor::TARGET_BLANK);
 		$this->assertSame(
 			'<a href="#" target="_blank">This is a link.</a>',

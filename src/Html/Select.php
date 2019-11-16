@@ -18,8 +18,8 @@ class Select extends Element {
 
 	public $selected_value;
 
-	public static function create(string $name, $content = NULL, iterable $attributes = []) {
-		return (new static($name, $content))->attributes($attributes);
+	public static function build(string $name, $options = NULL, iterable $attributes = []) {
+		return (new static($name, (array) $options))->attributes($attributes);
 	}
 
 	/**

@@ -12,8 +12,8 @@ class Image extends Element {
 
 	protected $tag = 'img';
 
-	public static function create(string $src, $alt = NULL, iterable $attributes = []) {
-		return (new static($src, $alt))->attributes($attributes);
+	public static function init(string $src, $alt = NULL, iterable $attributes = []) {
+		return (new static($src, (string) $alt))->attributes($attributes);
 	}
 
 

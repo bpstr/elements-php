@@ -4,9 +4,6 @@ namespace Bpstr\Elements\Collection;
 
 abstract class UniqueStringCollection extends StringCollection {
 
-	protected $implodePattern;
-	protected $implodeSpacing;
-
 	/**
 	 * {@inheritdoc}
 	 */

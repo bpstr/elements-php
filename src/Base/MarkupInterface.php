@@ -97,4 +97,6 @@ interface MarkupInterface extends Serializable, JsonSerializable {
 
 	public function __toString();
 
+	public function __invoke($key, $content);
+
 }

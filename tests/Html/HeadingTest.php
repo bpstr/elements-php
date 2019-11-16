@@ -17,7 +17,16 @@ final class HeadingTest extends TestCase {
 	}
 
 	public function testMethodCreate(): void {
-		$heading = Heading::create(3, 'This is a headline.', ['class' => 'lead']);
+		$heading = Heading::create('h1', 'This is a headline.', ['class' => 'lead']);
+		$heading->addClass('bold', 'white');
+		$this->assertSame(
+			'<h1 class="lead bold white">This is a headline.</h1>',
+			(string) $heading
+		);
+	}
+
+	public function testMethoBuild(): void {
+		$heading = Heading::build(3, 'This is a headline.', ['class' => 'lead']);
 		$heading->addClass('bold', 'white');
 		$this->assertSame(
 			'<h3 class="lead bold white">This is a headline.</h3>',

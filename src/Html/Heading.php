@@ -10,7 +10,7 @@ namespace Bpstr\Elements\Html;
  */
 class Heading extends Element {
 
-	public static function create($size, $content = NULL, iterable $attributes = []): Heading {
+	public static function build($size, $content = NULL, iterable $attributes = []): Heading {
 		$heading = new static($content, $size);
 		$heading->attributes($attributes);
 		return $heading;

@@ -24,8 +24,17 @@ class Anchor extends Element {
 	 */
 	protected $href;
 
-	public static function create($href, $content = NULL, iterable $attributes = []) {
-		return (new static($href))->content(self::CKEY_DEFAULT_CONTENT, $content)->attributes($attributes);
+	/**
+	 * @param $href
+	 * @param null $content
+	 * @param iterable $attributes
+	 *
+	 * @return \Bpstr\Elements\Html\Anchor
+	 */
+	public static function build($href, $content = NULL, iterable $attributes = []) {
+		$element = new static($href);
+		$element->content(self::CKEY_DEFAULT_CONTENT, $content)->attributes($attributes);
+		return $element;
 	}
 
 	/**

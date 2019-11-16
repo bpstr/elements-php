@@ -12,7 +12,7 @@ use Bpstr\Elements\Base\MarkupInterface;
 use Bpstr\Elements\Extension\ExtensionInterface;
 
 /**
- * Abstract HTML element class for Bootstrap components.
+ * Abstract HTML element class for elements-php.
  * Original: https://github.com/bpstr/elements-php
  */
 class Element extends Markup implements ElementInterface {
@@ -66,8 +66,7 @@ class Element extends Markup implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public static function create (string $tag, $content = NULL, iterable $attributes = []) {
-		$element = new static($tag);
-
+		$element = new self($tag);
 		$element->prepareContent($content);
 
 		// Add element attributes.
@@ -86,7 +85,9 @@ class Element extends Markup implements ElementInterface {
 	 */
 	public function __construct(string $tag) {
 		parent::__construct($tag);
-		$this->contents = new ElementContentCollection();
+		if ($this->contents === NULL) {
+			$this->contents = new ElementContentCollection();
+		}
 		$this->attributes = new ElementAttributeCollection();
 	}
 

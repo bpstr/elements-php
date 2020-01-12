@@ -342,19 +342,19 @@ class Element extends Markup implements ElementInterface {
 		}
 
 		$is_empty_html_tag = in_array($this->tag, self::EMPTY_ELEMENTS, true);
-		$first_tag_closing = $is_empty_html_tag ? '/' : '';
 
 		if ($is_empty_html_tag && $this->contents->count()) {
 			array_unshift($element, sprintf('<!-- Content dismissed in empty element: "%s" -->', $this->tag));
 		}
 
 		$opening_tag_contents = [$this->tag];
+
 		if ($this->attributes->count()) {
 			$opening_tag_contents[] = $this->attributes;
 		}
 
 		if ($is_empty_html_tag) {
-			$opening_tag_contents[] = $first_tag_closing;
+			$opening_tag_contents[] = '/';
 		}
 
 		$element['opening'] = sprintf('<%s>', implode(' ',  $opening_tag_contents));

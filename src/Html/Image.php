@@ -3,7 +3,7 @@
 namespace Bpstr\Elements\Html;
 
 /**
- * Heading HTML element class for Bootstrap components.
+ * Image HTML element class for elements-php.
  * Original: https://github.com/bpstr/elements-php
  *
  * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img
@@ -12,13 +12,14 @@ class Image extends Element {
 
 	protected $tag = 'img';
 
-	public static function init(string $src, $alt = NULL, iterable $attributes = []) {
-		return (new static($src, (string) $alt))->attributes($attributes);
+	public static function build(string $src, $alt = NULL, iterable $attributes = []): Image {
+		$image = new static($src, (string) $alt);
+		$image->attributes($attributes);
+		return $image;
 	}
 
-
 	/**
-	 * Heading constructor.
+	 * Image constructor.
 	 *
 	 * @param string $src
 	 * @param string $alt

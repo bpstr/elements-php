@@ -16,7 +16,7 @@ use Serializable;
  *
  * @author bpstr <bpstr@gmx.tm>
  */
-interface MarkupInterface extends Serializable, JsonSerializable {
+interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 
 	/**
 	 * Creates new instance of an HTML Element.

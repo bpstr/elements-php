@@ -5,7 +5,7 @@ namespace Bpstr\Elements\Html;
 use Bpstr\Elements\Base\ElementInterface;
 
 /**
- * Select HTML element class for Bootstrap components.
+ * Select HTML element class for elements-php.
  * Original: https://github.com/bpstr/elements-php
  *
  * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select

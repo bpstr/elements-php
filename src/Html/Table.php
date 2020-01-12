@@ -6,11 +6,8 @@ use Bpstr\Elements\Base\ElementContentCollection;
 use Bpstr\Elements\Base\ElementInterface;
 
 /**
- * Heading HTML element class for Bootstrap components.
+ * Heading HTML element class for elements-php.
  * Original: https://github.com/bpstr/elements-php
- *
- * @bpstr Project Lifera <bpstr@gmx.tm>
- * @version 5.0 HTML5
  */
 class Table extends Element {
 	public const CKEY_TABLE_HEAD = 0xF00001;

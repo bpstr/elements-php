@@ -79,7 +79,7 @@ class Input extends Element {
 	 * @param mixed $name
 	 * @param mixed $value
 	 */
-	function __construct (string $type = self::TYPE_TEXT, string $name = NULL, $value = NULL, ...$args) {
+	function __construct (string $type = self::TYPE_TEXT, string $name = NULL, $value = NULL) {
 		parent::__construct($this->tag);
 
 		$this->type($type);

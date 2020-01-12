@@ -190,7 +190,7 @@ class Markup implements MarkupInterface {
 	}
 
 	public function jsonSerialize() {
-		return [];
+		return $this->serialize();
 	}
 
 	public function __toString() {

@@ -16,7 +16,7 @@ final class ImageTest extends TestCase {
 	}
 
 	public function testMethodCreate(): void {
-		$image = Image::create('image.jpg', 'A simple image', ['class' => 'responsive']);
+		$image = Image::build('image.jpg', 'A simple image', ['class' => 'responsive']);
 		$this->assertSame(
 			'<img src="image.jpg" alt="A simple image" class="responsive" />',
 			(string) $image

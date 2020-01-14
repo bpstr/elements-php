@@ -14,7 +14,7 @@ final class DocumentTest extends TestCase {
 		$document->attr('lang', 'en');
 
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>HTML5</title></head><body></body></html>',
+			'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>HTML5</title></head><body></body></html>',
 			(string) $document
 		);
 	}
@@ -22,7 +22,7 @@ final class DocumentTest extends TestCase {
 	public function testDocumentCreate() {
 		$document = Document::create('Document Title', 'Lorem ipsum', ['lang' => 'fr']);
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="fr"><head><title>Document Title</title></head><body>Lorem ipsum</body></html>',
+			'<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8" /><title>Document Title</title></head><body>Lorem ipsum</body></html>',
 			(string) $document
 		);
 	}
@@ -33,7 +33,7 @@ final class DocumentTest extends TestCase {
 		$document->head('meta', Element::create('meta', NULL, ['value' => 'ROBOTS']));
 
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>HTML5</title><meta value="ROBOTS" /></head><body></body></html>',
+			'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>HTML5</title><meta value="ROBOTS" /></head><body></body></html>',
 			(string) $document
 		);
 	}
@@ -45,7 +45,7 @@ final class DocumentTest extends TestCase {
 		$document->body('content', Element::create('div', 'Lorem ipsum.'));
 
 		$this->assertSame(
-			'<!DOCTYPE html><html lang="en"><head><title>HTML5</title></head><body><div>Lorem ipsum.</div></body></html>',
+			'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>HTML5</title></head><body><div>Lorem ipsum.</div></body></html>',
 			(string) $document
 		);
 	}

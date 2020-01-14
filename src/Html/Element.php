@@ -78,6 +78,13 @@ class Element extends Markup implements ElementInterface {
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public static function createWithClass(string $tag, string ...$classes) {
+		return self::create($tag)->addClass(...$classes);
+	}
+
+	/**
 	 * ElementBase constructor.
 	 *
 	 * @param string $tag

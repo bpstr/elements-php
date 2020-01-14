@@ -27,9 +27,17 @@ interface ElementInterface extends MarkupInterface {
 	 * @param array $attributes
 	 *   Associative array with HTML attributes
 	 *
-	 * @return ElementInterface
+	 * @return \Bpstr\Elements\Base\ElementInterface
 	 */
-	public static function create (string $tag, $content = NULL, iterable $attributes = []) ;
+	public static function create (string $tag, $content = NULL, iterable $attributes = []);
+
+	/**
+	 * @param string $tag
+	 * @param string[] ...$classes
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public static function createWithClass(string $tag, string ...$classes);
 
 	/**
 	 * @return string
@@ -128,7 +136,7 @@ interface ElementInterface extends MarkupInterface {
 	public function setAttribute(string $name, $value): ElementInterface;
 
 	/**
-	 * @param $key
+	 * @param array $keys
 	 *
 	 * @return \Bpstr\Elements\Base\ElementInterface
 	 */
@@ -157,7 +165,7 @@ interface ElementInterface extends MarkupInterface {
 	public function getClasses(): ElementClassCollection;
 
 	/**
-	 * @param string ...$classes
+	 * @param string[] $classes
 	 *
 	 * @return \Bpstr\Elements\Base\ElementInterface
 	 */

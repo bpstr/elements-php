@@ -79,6 +79,12 @@ interface ElementInterface extends MarkupInterface {
 	/**
 	 * Place content to an element with a given key.
 	 *
+	 * Note: when passing an iterable value to $content parameter,
+	 * this method will be called recursively. Doing such way, the
+	 * first parameter will be used to prefix the array keys.
+	 * @example self::placeContent('key', ['a' => ['b' => 'c']);
+	 *    Will add keyab = 'c' to the internal content collection.
+	 *
 	 * @param mixed $key
 	 * @param mixed $content
 	 *
@@ -151,7 +157,7 @@ interface ElementInterface extends MarkupInterface {
 	public function getClasses(): ElementClassCollection;
 
 	/**
-	 * @param string[] $classes
+	 * @param string ...$classes
 	 *
 	 * @return \Bpstr\Elements\Base\ElementInterface
 	 */

@@ -160,6 +160,13 @@ class Element extends Markup implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public function placeContent($key, $content): ElementInterface {
+		if (is_iterable($content)) {
+			foreach ($content as $index => $item) {
+				$this->placeContent($key.$index, $item);
+			}
+			return $this;
+		}
+
 		$this->contents->set($key, $content);
 		return $this;
 	}

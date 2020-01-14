@@ -110,4 +110,32 @@ final class ElementContentTest extends TestCase {
 		);
 	}
 
+	public function testElementArrayContentParameter() {
+		$div = Element::create('div', [
+			Element::create('p', 'Lorem ipsum dolor sit amet.'),
+			Element::create('p', 'Consectetur adipisci elit.'),
+		]);
+
+		$this->assertSame(
+			'<div><p>Lorem ipsum dolor sit amet.</p><p>Consectetur adipisci elit.</p></div>',
+			(string) $div
+		);
+	}
+
+	public function testElementRecursiveContentManagement() {
+		$div = Element::create('div', [
+			Element::create('p', 'Lorem ipsum dolor sit amet.'),
+			Element::create('p', 'Consectetur adipisci elit.'),
+			[
+				Element::create('span', 'Dolorium')->addClass('badge'),
+				Element::create('small', 'Acquisite'),
+			]
+		]);
+
+		$this->assertSame(
+			'<div><p>Lorem ipsum dolor sit amet.</p><p>Consectetur adipisci elit.</p><span class="badge">Dolorium</span><small>Acquisite</small></div>',
+			(string) $div
+		);
+	}
+
 }

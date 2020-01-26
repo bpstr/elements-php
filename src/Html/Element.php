@@ -100,6 +100,11 @@ class Element extends Markup implements ElementInterface {
 
 
 
+	public function is(string ...$tags): bool {
+		return in_array($this->tag, $tags);
+	}
+
+
 	/**
 	 * {@inheritdoc}
 	 */

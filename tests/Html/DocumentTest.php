@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 final class DocumentTest extends TestCase {
 
 	public function testDocument(): void {
-		$document = new Document('Some title');
+		$document = new Document();
 		$document->title('HTML5');
 		$document->attr('lang', 'en');
 
@@ -28,7 +28,7 @@ final class DocumentTest extends TestCase {
 	}
 
 	public function testDocumentHead(): void {
-		$document = new Document('HTML5');
+		$document = Document::create('HTML5');
 
 		$document->head('meta', Element::create('meta', NULL, ['value' => 'ROBOTS']));
 
@@ -39,7 +39,7 @@ final class DocumentTest extends TestCase {
 	}
 
 	public function testDocumentBody(): void {
-		$document = new Document('HTML');
+		$document = new Document();
 		$document->title('HTML5');
 
 		$document->body('content', Element::create('div', 'Lorem ipsum.'));

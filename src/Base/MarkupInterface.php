@@ -11,8 +11,8 @@ use Serializable;
  * This interface defines base methods which are needed to create
  * SGTML markup with ease.
  *
- * Note: This interface defines CHAINABLE methods in order to simply
- * create any kind of element.
+ * Note: MarkupInterface defines CHAINABLE methods only, in order
+ * to simply create any kind of element.
  *
  * @author bpstr <bpstr@gmx.tm>
  */

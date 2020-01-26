@@ -39,6 +39,17 @@ interface ElementInterface extends MarkupInterface {
 	 */
 	public static function createWithClass(string $tag, string ...$classes);
 
+
+	/**
+	 * Determines whether the current tag is in the given list or not.
+	 *
+	 * @param string[] ...$tags
+	 *
+	 * @return bool
+	 */
+	public function is(string ...$tags): bool;
+
+
 	/**
 	 * @return string
 	 */

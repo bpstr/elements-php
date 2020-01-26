@@ -2,12 +2,24 @@
 
 namespace Bpstr\Elements\Html;
 
+use Bpstr\Elements\Base\DocumentInterface;
 use Bpstr\Elements\Base\Markup;
 
-class Document extends Markup {
+/**
+ * Class Document
+ *
+ * @package Bpstr\Elements\Html
+ *
+ * @todo Refactor for Extensions!
+ * @todo implement Javascript method (Head or body)
+ * @todo Section management
+ * @todo Prepared documents
+ */
+class Document extends Markup implements DocumentInterface {
 
 	public static function create(string $title, $content = NULL, iterable $attributes = []) {
-		$markup = new static($title);
+		$markup = new static();
+		$markup->title($title);
 
 		// Add content if exists.
 		if ($content !== NULL) {
@@ -22,14 +34,13 @@ class Document extends Markup {
 		return $markup;
 	}
 
-	public function __construct(string $title, string $lang = 'en', $charset='utf-8') {
+	public function __construct(string $lang = 'en', $charset='utf-8') {
 		parent::__construct('html');
 		$this->before = '<!DOCTYPE html>';
 		$this->content('head', Markup::create('head'));
 		$this->content('body', Markup::create('body'));
 		$this->attr('lang', $lang);
 		$this->head('charset', Element::create('meta')->attr('charset', $charset));
-		$this->title($title);
 	}
 
 	public function title($content) {
@@ -70,6 +81,10 @@ class Document extends Markup {
 		}
 
 		$this->head($href, $stylesheet);
+	}
+
+	public function javascript() {
+
 	}
 
 	public function body($key, $content) {

@@ -53,8 +53,18 @@ class Input extends Element {
 
 	public $tag = 'input';
 
-	public static function build(string $name = NULL, $value = NULL, string $type = self::TYPE_TEXT, iterable $attributes = []) {
-		return (new static($type, $name, $value))->attributes($attributes);
+	/**
+	 * @param string|NULL $name
+	 * @param null $value
+	 * @param string $type
+	 * @param iterable $attributes
+	 *
+	 * @return \Bpstr\Elements\Html\Input
+	 */
+	public static function build(string $name = NULL, $value = NULL, string $type = self::TYPE_TEXT, iterable $attributes = []): Input {
+		$input = new static($type, $name, $value);
+		$input->attributes($attributes);
+		return $input;
 	}
 
 	/**

@@ -8,10 +8,7 @@ namespace Bpstr\Elements\Base;
  *
  * @package Bpstr\Elements\Base
  */
-interface Renderable {
+interface RenderableInterface {
 
 	public function render();
-
-	public function __toString();
-
 }

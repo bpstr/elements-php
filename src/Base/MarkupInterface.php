@@ -33,16 +33,21 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	public static function create (string $tag, $content = NULL, iterable $attributes = []);
 
 	/**
-	 * Changes the element tag or returns the current one.
+	 * Set the element tag
 	 *
-	 * @param string|NULL $tag
+	 * @param string $tag
 	 *
 	 * @return $this
 	 */
 	public function tag(string $tag);
 
 	/**
-	 * Adds a wrapping element to current element.
+	 * @return string
+	 */
+	public function getTag(): string;
+
+	/**
+	 * Set a wrapping element around the current element.
 	 *
 	 * @param MarkupInterface $wrap
 	 *
@@ -69,7 +74,7 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	public function after(MarkupInterface $after);
 
 	/**
-	 * Adds content to an element.
+	 * Set content to an element.
 	 *
 	 * @param $key
 	 * @param $value
@@ -77,6 +82,15 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	 * @return $this
 	 */
 	public function content($key, $value);
+
+	/**
+	 * Returns a content entry with the given key or NULL.
+	 *
+	 * @param mixed|NULL $key
+	 *
+	 * @param mixed|NULL $default
+	 */
+	public function getContent($key = NULL, $default = NULL);
 
 	/**
 	 * Edit or define an HTML attribute.
@@ -87,6 +101,40 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	 * @return $this
 	 */
 	public function attr(string $attr, $val = NULL);
+	
+		/**
+	 * @param iterable $attributes
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function attributes(iterable $attributes): self;
+
+	/**
+	 * @return \Bpstr\Elements\Base\ElementAttributeCollection
+	 */
+	public function getAttributes(): ElementAttributeCollection;
+
+	/**
+	 * @param string $name
+	 * @param $value
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function setAttribute(string $name, $value): ElementInterface;
+
+	/**
+	 * @param array $keys
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function removeAttribute(... $keys): ElementInterface;
+
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function hasAttribute(string $name): bool;
 
 	/**
 	 * Renders an HTML element as string.
@@ -94,9 +142,4 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	 * @return string
 	 */
 	public function render(): string;
-
-	public function __toString();
-
-	public function __invoke($key, $content);
-
 }

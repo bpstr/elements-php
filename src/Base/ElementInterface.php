@@ -5,25 +5,38 @@ namespace Bpstr\Elements\Base;
 use Bpstr\Elements\Extension\ExtensionInterface;
 
 /**
- * Basic HTML Element interface.
+ * Basic Element interface.
  *
  * This interface defines base methods which are needed to create
- * HTML elements with ease.
+ * elements with ease.
  *
  * Note: This interface defines CHAINABLE methods in order to simply
  * create any kind of element.
  *
  * @author bpstr <bpstr@gmx.tm>
+ * @author skillberto <skillbertoo@gmail.com>
  */
-interface ElementInterface extends MarkupInterface {
-	
+interface ElementInterface extends NodeInterface {
+
+	/**
+	 * Creates new instance of a Node
+	 *
+	 * @param string     $tag               HTML Tag of the element
+	 * @param itarable   $attributes	Iterable, contains attributes
+	 * @param mixed|null $content           Content of the element
+	 *
+	 * @return ElementInterface
+	 */
+	public static function create (string $tag, iterable $attributes, $content = NULL): ElementInterface;
+
+
 	/**
 	 * @param string $tag
 	 * @param string[] ...$classes
 	 *
-	 * @return \Bpstr\Elements\Base\ElementInterface
+	 * @return ElementInterface
 	 */
-	public static function createWithClass(string $tag, string ...$classes);
+	public static function createWithClass(string $tag, string ...$classes): ElementInterface;
 
 
 	/**
@@ -42,7 +55,7 @@ interface ElementInterface extends MarkupInterface {
 	 *
 	 * @return $this
 	 */
-	public function prependContent($content): self;
+	public function prependContent($content): ElementInterface;
 
 	/**
 	 * Place content after other content.
@@ -51,7 +64,7 @@ interface ElementInterface extends MarkupInterface {
 	 *
 	 * @return $this
 	 */
-	public function appendContent($content = NULL): self;
+	public function appendContent($content = NULL): ElementInterface;
 
 	/**
 	 * Place content to an element with a given key.
@@ -67,7 +80,7 @@ interface ElementInterface extends MarkupInterface {
 	 *
 	 * @return $this
 	 */
-	public function placeContent($key, $content): self;
+	public function placeContent($key, $content): ElementInterface;
 
 	/**
 	 * @param string $tag
@@ -112,8 +125,6 @@ interface ElementInterface extends MarkupInterface {
 	 */
 	public function hasClass(string $class): bool;
 
-
-
 	/**
 	 * @param string $property
 	 * @param $value
@@ -150,9 +161,47 @@ interface ElementInterface extends MarkupInterface {
 	 */
 	public function hasStyle(string $property): bool;
 
+	/**
+	 * Edit or define an HTML attribute.
+	 *
+	 * @param string $attr
+	 * @param $val
+	 *
+	 * @return $this
+	 */
+	public function attr(string $attr, $val = NULL);
+	
+	/**
+	 * @param iterable $attributes
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function attributes(iterable $attributes): ElementInterface;
 
+	/**
+	 * @return \Bpstr\Elements\Base\ElementAttributeCollection
+	 */
+	public function getAttributes(): ElementAttributeCollection;
 
-	public function attachExtension(ExtensionInterface $extension);
+	/**
+	 * @param string $name
+	 * @param $value
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function setAttribute(string $name, $value): ElementInterface;
 
-	public function detachExtension(string $name);
+	/**
+	 * @param array $keys
+	 *
+	 * @return \Bpstr\Elements\Base\ElementInterface
+	 */
+	public function removeAttribute(... $keys): ElementInterface;
+
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function hasAttribute(string $name): bool;
 }

@@ -16,10 +16,19 @@ use Bpstr\Elements\Base\Markup;
  * @todo Prepared documents
  */
 class Document extends Markup implements DocumentInterface {
+	const DEFAULT_DOCTYPE = '<!DOCTYPE html>';
 
-	public static function create(string $title, $content = NULL, iterable $attributes = []) {
-		$markup = new static();
-		$markup->title($title);
+	const CKEY_DEFAULT_HEAD = 0xA0000;
+	const CKEY_DEFAULT_BOTTOM = 0xFF0000;
+
+	public static function build(string $title, string $content, iterable $attributes = []) {
+		$document = static::create(self::DEFAULT_DOCTYPE, $content, $attributes);
+		$document->title($title);
+		return $document;
+	}
+
+	public static function create(string $doctype = self::DEFAULT_DOCTYPE, $content = NULL, iterable $attributes = []) {
+		$markup = new static($doctype);
 
 		// Add content if exists.
 		if ($content !== NULL) {
@@ -34,27 +43,27 @@ class Document extends Markup implements DocumentInterface {
 		return $markup;
 	}
 
-	public function __construct(string $lang = 'en', $charset='utf-8') {
+	public function __construct(string $doctype = self::DEFAULT_DOCTYPE, $lang = 'en', $charset = 'utf-8') {
 		parent::__construct('html');
-		$this->before = '<!DOCTYPE html>';
-		$this->content('head', Markup::create('head'));
-		$this->content('body', Markup::create('body'));
+		$this->before = $doctype;
+		$this->content(self::CKEY_DEFAULT_HEAD, Markup::create('head'));
+		$this->content(self::CKEY_DEFAULT_CONTENT, Markup::create('body'));
 		$this->attr('lang', $lang);
-		$this->head('charset', Element::create('meta')->attr('charset', $charset));
+		$this->head('charset', Markup::create('meta')->attr('charset', $charset));
 	}
 
 	public function title($content) {
-		$this->contents['head']->content('title', Element::create('title', $content));
+		$this->contents[self::CKEY_DEFAULT_HEAD]->content('title', Element::create('title', $content));
 		return $this;
 	}
 
 	public function head($key, $content) {
-		$this->contents['head']->content($key, $content);
+		$this->contents[self::CKEY_DEFAULT_HEAD]->content($key, $content);
 		return $this;
 	}
 
 	public function meta(string $name, $content) {
-		$meta = Element::create('meta')->attr('name', $name)->attr('content', $content);
+		$meta = Markup::create('meta')->attr('name', $name)->attr('content', $content);
 		$this->head($name, $meta);
 		return $this;
 	}
@@ -68,7 +77,7 @@ class Document extends Markup implements DocumentInterface {
 	 * @link https://www.w3.org/TR/html401/present/styles.html
 	 */
 	public function stylesheet(string $href, ?string $media) {
-		$stylesheet = Element::create('link')->attributes(
+		$stylesheet = Markup::create('link')->attributes(
 			[
 				'rel' => 'stylesheet',
 				'type' => 'text/css',
@@ -83,8 +92,17 @@ class Document extends Markup implements DocumentInterface {
 		$this->head($href, $stylesheet);
 	}
 
-	public function javascript() {
+	public function render(array $element = [], array $additional_attributes = []): string {
+		$bottom_content = $this->contents[self::CKEY_DEFAULT_BOTTOM] ?? NuLL;
+		$this->contents[self::CKEY_DEFAULT_CONTENT]->content(self::CKEY_DEFAULT_BOTTOM, !$bottom_content);
+		unset($this->contents[self::CKEY_DEFAULT_BOTTOM]);
+		return parent::render($element, $additional_attributes);
+	}
 
+	public function javascript(string $src, $position = self::CKEY_DEFAULT_BOTTOM) {
+		$script = Markup::create('script')->attr('src', $src);
+		$this->content($position, $script);
+		return $this;
 	}
 
 	public function body($key, $content) {

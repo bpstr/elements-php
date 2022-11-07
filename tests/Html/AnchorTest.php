@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 final class AnchorTest extends TestCase {
 
 	public function testAnchor(): void {
-		$anchor = new Anchor('#', Anchor::TARGET_BLANK);
+		$anchor = new Anchor();
+		$anchor->href('#')->target('_blank');
 		$anchor->content(Anchor::CKEY_DEFAULT_CONTENT, 'This is a link.');
 		$this->assertSame(
 			'<a href="#" target="_blank">This is a link.</a>',

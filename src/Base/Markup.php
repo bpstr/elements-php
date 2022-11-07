@@ -76,7 +76,7 @@ class Markup implements MarkupInterface {
 		if ($tag === '') {
 			throw new InvalidArgumentException('Markup tag must not be empty!');
 		}
-		$this->tag = $tag;
+		$this->tag($tag);
 	}
 
 	/**
@@ -133,6 +133,17 @@ class Markup implements MarkupInterface {
 		return $this;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function attributes(iterable $attributes) {
+		foreach ($attributes as $name => $value) {
+			$this->attr($name, $value);
+		}
+
+		return $this;
+	}
+
 
 	/**
 	 * {@inheritdoc}
@@ -146,7 +157,7 @@ class Markup implements MarkupInterface {
 		];
 
 		$opening_tag_contents = [$this->tag];
-		foreach ($this->attributes as $name => $value) {
+		foreach ($additional_attributes + $this->attributes as $name => $value) {
 			$opening_tag_contents[] = sprintf('%s="%s"', trim($name), trim(str_replace('"', "'", (string) $value)));
 		}
 

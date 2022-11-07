@@ -32,6 +32,8 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	 */
 	public static function create (string $tag, $content = NULL, iterable $attributes = []);
 
+	public function __construct(string $tag);
+
 	/**
 	 * Changes the element tag or returns the current one.
 	 *
@@ -87,6 +89,13 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	 * @return $this
 	 */
 	public function attr(string $attr, $val = NULL);
+
+	/**
+	 * @param iterable $attributes
+	 *
+	 * @return $this
+	 */
+	public function attributes(iterable $attributes);
 
 	/**
 	 * Renders an HTML element as string.

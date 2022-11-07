@@ -14,24 +14,15 @@ class Table extends Element {
 	public const CKEY_TABLE_BODY = 0xF00002;
 	public const CKEY_TABLE_FOOT = 0xF00003;
 
-	public $tag = 'table';
-
-	public static function build(string $caption, $content = NULL, iterable $attributes = []) {
-		$table = new static($content);
-		$table->caption($caption);
-		$table->attributes($attributes);
-		return $table;
-	}
-
-	public function __construct (iterable $content, iterable $header = NULL, iterable $footer = NULL) {
-		parent::__construct($this->tag);
+	public static function build(iterable $content, iterable $header = NULL, iterable $footer = NULL) {
+		$table = new static();
 
 		if (!empty($header)) {
-			$this->setHeader($header);
+			$table->setHeader($header);
 		}
 
 		if (!empty($footer)) {
-			$this->setFooter($footer);
+			$table->setFooter($footer);
 		}
 
 		$table_rows = new ElementContentCollection([], Element::create('tr'));
@@ -40,10 +31,14 @@ class Table extends Element {
 				$row = [$row];
 			}
 
-			$table_rows->set($index, $this->tableRow($row));
+			$table_rows->set($index, $table->tableRow($row));
 		}
-		$this->setBody($table_rows);
+		$table->setBody($table_rows);
+		return $table;
+	}
 
+	public function __construct ($tag = 'table') {
+		parent::__construct($tag);
 	}
 
 	public function caption(string $text, array $attributes = []) {

@@ -11,7 +11,10 @@ namespace Bpstr\Elements\Html;
 class Heading extends Element {
 
 	public static function build($size, $content = NULL, iterable $attributes = []): Heading {
-		$heading = new static($content, $size);
+		$size = max(1, min(6, $size));
+		$tag = "h$size";
+		$heading = new static($tag);
+		$heading->prepareContent($content);
 		$heading->attributes($attributes);
 		return $heading;
 	}
@@ -19,15 +22,10 @@ class Heading extends Element {
 	/**
 	 * Heading constructor.
 	 *
-	 * @param mixed $content	Contents of heading tag
-	 * @param int $size 		Size of heading tag
+	 * @param string $tag
 	 */
-	public function __construct ($content, int $size = 1) {
-		$size = max(1, min(6, $size));
-		$tag = "h$size";
+	public function __construct (string $tag = 'h2') {
 		parent::__construct($tag);
-
-		$this->appendContent($content);
 	}
 
 }

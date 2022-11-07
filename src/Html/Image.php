@@ -10,10 +10,10 @@ namespace Bpstr\Elements\Html;
  */
 class Image extends Element {
 
-	protected $tag = 'img';
-
 	public static function build(string $src, $alt = NULL, iterable $attributes = []): Image {
-		$image = new static($src, (string) $alt);
+		$image = new static();
+		$image->attr('src', $src);
+		$image->attr('alt', $alt);
 		$image->attributes($attributes);
 		return $image;
 	}
@@ -21,14 +21,10 @@ class Image extends Element {
 	/**
 	 * Image constructor.
 	 *
-	 * @param string $src
-	 * @param string $alt
+	 * @param string $tag
 	 */
-	public function __construct (string $src, string $alt = '') {
-		parent::__construct($this->tag);
-
-		$this->attr('src', $src);
-		$this->attr('alt', $alt);
+	public function __construct (string $tag = 'img') {
+		parent::__construct($tag);
 	}
 
 }

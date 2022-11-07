@@ -66,7 +66,7 @@ class Element extends Markup implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public static function create (string $tag, $content = NULL, iterable $attributes = []) {
-		$element = new self($tag);
+		$element = new static($tag);
 		$element->prepareContent($content);
 
 		// Add element attributes.
@@ -81,7 +81,7 @@ class Element extends Markup implements ElementInterface {
 	 * {@inheritdoc}
 	 */
 	public static function createWithClass(string $tag, string ...$classes) {
-		return self::create($tag)->addClass(...$classes);
+		return static::create($tag)->addClass(...$classes);
 	}
 
 	/**
@@ -97,8 +97,6 @@ class Element extends Markup implements ElementInterface {
 		}
 		$this->attributes = new ElementAttributeCollection();
 	}
-
-
 
 	public function is(string ...$tags): bool {
 		return in_array($this->tag, $tags);
@@ -202,17 +200,6 @@ class Element extends Markup implements ElementInterface {
 	 */
 	public function attr(string $attr, $value = NULL): ElementInterface {
 		$this->setAttribute($attr, $value);
-		return $this;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function attributes(iterable $attributes): ElementInterface {
-		foreach ($attributes as $name => $value) {
-			$this->setAttribute($name, $value);
-		}
-
 		return $this;
 	}
 

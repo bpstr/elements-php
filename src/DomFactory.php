@@ -1,7 +1,5 @@
 <?php
 namespace Bpstr\Elements;
-require_once '../vendor/autoload.php';
-
 
 use Bpstr\Elements\Html\Element;
 
@@ -165,7 +163,8 @@ class DomFactory {
 	 * @return \Bpstr\Elements\Html\Element|void
 	 */
 	public static function __callStatic($type, $arguments) {
-		if (constant(sprintf('%s::HTML_%s', static::class, strtoupper($type))) === $type) {
+		$constant = sprintf('%s::HTML_%s', static::class, strtoupper($type));
+		if (defined($constant) && constant($constant) === $type) {
 			return Element::create($type, ...$arguments);
 		}
 	}

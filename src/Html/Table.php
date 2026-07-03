@@ -23,7 +23,7 @@ class Table extends Element {
 		return $table;
 	}
 
-	public function __construct (iterable $content, iterable $header = NULL, iterable $footer = NULL) {
+	public function __construct (iterable $content, ?iterable $header = NULL, ?iterable $footer = NULL) {
 		parent::__construct($this->tag);
 
 		if (!empty($header)) {

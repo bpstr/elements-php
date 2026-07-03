@@ -61,7 +61,7 @@ class Input extends Element {
 	 *
 	 * @return \Bpstr\Elements\Html\Input
 	 */
-	public static function build(string $name = NULL, $value = NULL, string $type = self::TYPE_TEXT, iterable $attributes = []): Input {
+	public static function build(?string $name = NULL, $value = NULL, string $type = self::TYPE_TEXT, iterable $attributes = []): Input {
 		$input = new static($type, $name, $value);
 		$input->attributes($attributes);
 		return $input;
@@ -89,7 +89,7 @@ class Input extends Element {
 	 * @param mixed $name
 	 * @param mixed $value
 	 */
-	function __construct (string $type = self::TYPE_TEXT, string $name = NULL, $value = NULL) {
+	function __construct (string $type = self::TYPE_TEXT, ?string $name = NULL, $value = NULL) {
 		parent::__construct($this->tag);
 
 		$this->type($type);

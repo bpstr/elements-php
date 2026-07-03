@@ -9,7 +9,7 @@ class ElementContentCollection extends UniqueStringCollection {
 
 	protected $itemWrapper;
 
-	public function __construct(iterable $elements = [], ElementInterface $item_wrapper = NULL) {
+	public function __construct(iterable $elements = [], ?ElementInterface $item_wrapper = NULL) {
 		$this->itemWrapper = $item_wrapper;
 		parent::__construct($elements);
 	}

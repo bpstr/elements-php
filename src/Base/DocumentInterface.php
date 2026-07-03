@@ -12,7 +12,7 @@ interface DocumentInterface extends MarkupInterface {
 
 	public function stylesheet(string $href, ?string $media = NULL);
 
-	public function javascript(string $src = NULL, string $location = 'head', iterable $attributes = []);
+	public function javascript(?string $src = NULL, string $location = 'head', iterable $attributes = []);
 
 	public function body($key, $content);
 

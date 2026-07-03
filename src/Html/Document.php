@@ -84,7 +84,7 @@ class Document extends Markup implements DocumentInterface {
 		return $this;
 	}
 
-	public function javascript(string $src = NULL, string $location = 'head', iterable $attributes = []) {
+	public function javascript(?string $src = NULL, string $location = 'head', iterable $attributes = []) {
 		if ($src === NULL) {
 			return $this;
 		}

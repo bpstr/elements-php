@@ -64,4 +64,15 @@ final class TableTest extends TestCase {
 		);
 	}
 
+	public function testTableCaption(): void {
+		$table = new Table([['a', 'b']]);
+
+		$this->assertSame($table, $table->caption('Letters'));
+
+		$this->assertSame(
+			'<table><caption>Letters</caption><tbody><tr><td>a</td><td>b</td></tr></tbody></table>',
+			(string) $table
+		);
+	}
+
 }

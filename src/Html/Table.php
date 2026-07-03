@@ -47,7 +47,8 @@ class Table extends Element {
 	}
 
 	public function caption(string $text, array $attributes = []) {
-		$this->before(Element::create('caption', $text, $attributes));
+		$this->prependContent(Element::create('caption', $text, $attributes));
+		return $this;
 	}
 
 	/**

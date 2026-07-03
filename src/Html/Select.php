@@ -18,6 +18,10 @@ class Select extends Element {
 
 	public $selected_value;
 
+	public static function create(string $name, $options = NULL, iterable $attributes = []) {
+		return static::build($name, $options, $attributes);
+	}
+
 	public static function build(string $name, $options = NULL, iterable $attributes = []) {
 		return (new static($name, (array) $options))->attributes($attributes);
 	}
@@ -82,5 +86,6 @@ class Select extends Element {
 		if ($this->contents->has($key) && $this->contents->get($key) instanceof ElementInterface) {
 			$this->contents->ref($key)->attr('selected', true);
 		}
+		return $this;
 	}
 }

@@ -20,8 +20,19 @@ final class SelectTest extends TestCase {
 		$cities = ['BUD' => 'Budapest', 'KIN' => 'Kingston'];
 		$select = Select::create( 'city', $cities);
 		$select->activate('KIN');
+		$this->assertInstanceOf(Select::class, $select);
 		$this->assertSame(
 			'<select name="city"><option value="BUD">Budapest</option><option value="KIN" selected="selected">Kingston</option></select>',
+			(string) $select
+		);
+	}
+
+	public function testMethodCreateWithAttributes(): void {
+		$cities = ['BUD' => 'Budapest', 'KIN' => 'Kingston'];
+		$select = Select::create('city', $cities, ['id' => 'city-select']);
+
+		$this->assertSame(
+			'<select name="city" id="city-select"><option value="BUD">Budapest</option><option value="KIN">Kingston</option></select>',
 			(string) $select
 		);
 	}

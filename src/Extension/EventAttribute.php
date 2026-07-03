@@ -27,7 +27,7 @@ class EventAttribute extends ExtensionBase {
 		$script = sprintf(
 			'function loadXMLDoc(callback,target,attributes){var defaults=%s;var params=Object.assign({},defaults,attributes||{});var query=Object.keys(params).map(function(key){return encodeURIComponent(key)+"="+encodeURIComponent(params[key]);}).join("&");var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState===XMLHttpRequest.DONE&&xmlhttp.status===200){document.getElementById(target).innerHTML=xmlhttp.responseText;}};xmlhttp.open("GET",%s+callback+(query?"?"+query:""),true);xmlhttp.send()}',
 			json_encode($attributes),
-			json_encode($endpoint)
+			json_encode($endpoint, JSON_UNESCAPED_SLASHES)
 		);
 		return Element::create('script', $script,['type' => 'text/javascript']);
 	}

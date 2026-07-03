@@ -1,21 +1,20 @@
-function loadXMLDoc(target, callback, attributes) { // @todo attributes json
-    let xmlhttp = new XMLHttpRequest();
+function loadXMLDoc(callback, target, attributes) {
+    var defaults = {};
+    var params = Object.assign({}, defaults, attributes || {});
+    var query = Object.keys(params).map(function(key) {
+        return encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+    }).join("&");
+    var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
             if (xmlhttp.status === 200) {
                 document.getElementById(target).innerHTML = xmlhttp.responseText;
             }
-            else if (xmlhttp.status === 400) {
-                console.log('Some serious fuckup has been detected.');
-            }
-            else {
-                console.log('Weird magic happens here - ' + xmlhttp.status);
-            }
         }
     };
 
-    xmlhttp.open("GET", "ENDPOINT" + callback + '?' + attributes, true);
+    xmlhttp.open("GET", "ENDPOINT" + callback + (query ? "?" + query : ""), true);
     xmlhttp.send();
 }
 

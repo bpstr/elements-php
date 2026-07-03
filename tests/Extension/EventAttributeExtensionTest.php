@@ -18,4 +18,15 @@ final class EventAttributeExtensionTest extends TestCase {
 		);
 	}
 
+	public function testScriptUsesEndpointAndDefaultAttributes(): void {
+		$script = EventAttribute::script('/endpoint/', ['token' => 'abc 123']);
+		$markup = (string) $script;
+
+		$this->assertStringContainsString('<script type="text/javascript">', $markup);
+		$this->assertStringContainsString('var defaults={"token":"abc 123"};', $markup);
+		$this->assertStringContainsString('"/endpoint/"+callback', $markup);
+		$this->assertStringContainsString('Object.assign({},defaults,attributes||{})', $markup);
+		$this->assertStringContainsString('encodeURIComponent(params[key])', $markup);
+	}
+
 }

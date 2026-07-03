@@ -23,9 +23,12 @@ class EventAttribute extends ExtensionBase {
 		return $this;
 	}
 
-	public static function script($endpoint, $attributes) {
-		$json_attr = json_encode($attributes);
-		$script = str_replace('ENDPOINT', $endpoint, 'function loadXMLDoc(e,t){let n=new XMLHttpRequest;n.onreadystatechange=function(){n.readyState===XMLHttpRequest.DONE&&(200===n.status?document.getElementById(t).innerHTML=n.responseText:400===n.status?console.log("Some serious fuckup has been detected."):console.log("Weird magic happens here - "+n.status))},n.open("GET","ENDPOINT"+e,!0),n.send()}');
+	public static function script($endpoint, $attributes = []) {
+		$script = sprintf(
+			'function loadXMLDoc(callback,target,attributes){var defaults=%s;var params=Object.assign({},defaults,attributes||{});var query=Object.keys(params).map(function(key){return encodeURIComponent(key)+"="+encodeURIComponent(params[key]);}).join("&");var xmlhttp=new XMLHttpRequest();xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState===XMLHttpRequest.DONE&&xmlhttp.status===200){document.getElementById(target).innerHTML=xmlhttp.responseText;}};xmlhttp.open("GET",%s+callback+(query?"?"+query:""),true);xmlhttp.send()}',
+			json_encode($attributes),
+			json_encode($endpoint)
+		);
 		return Element::create('script', $script,['type' => 'text/javascript']);
 	}
 

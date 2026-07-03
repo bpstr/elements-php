@@ -11,7 +11,6 @@ use Bpstr\Elements\Base\Markup;
  * @package Bpstr\Elements\Html
  *
  * @todo Refactor for Extensions!
- * @todo implement Javascript method (Head or body)
  * @todo Section management
  * @todo Prepared documents
  */

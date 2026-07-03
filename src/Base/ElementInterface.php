@@ -39,7 +39,6 @@ interface ElementInterface extends MarkupInterface {
 	 */
 	public static function createWithClass(string $tag, string ...$classes);
 
-
 	/**
 	 * Determines whether the current tag is in the given list or not.
 	 *
@@ -117,13 +116,6 @@ interface ElementInterface extends MarkupInterface {
 	 * @return array
 	 */
 	public function getChildrenByTagname(string $tag): array;
-
-	/**
-	 * @param iterable $attributes
-	 *
-	 * @return \Bpstr\Elements\Base\ElementInterface
-	 */
-	public function attributes(iterable $attributes): self;
 
 	/**
 	 * @return \Bpstr\Elements\Base\ElementAttributeCollection

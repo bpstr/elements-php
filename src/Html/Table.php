@@ -16,14 +16,11 @@ class Table extends Element {
 
 	public $tag = 'table';
 
-	public static function build(string $caption, $content = NULL, iterable $attributes = []) {
-		$table = new static($content);
-		$table->caption($caption);
-		$table->attributes($attributes);
-		return $table;
+	public static function build(iterable $content, ?iterable $header = NULL, ?iterable $footer = NULL) {
+		return new static($content, $header, $footer);
 	}
 
-	public function __construct (iterable $content, ?iterable $header = NULL, ?iterable $footer = NULL) {
+	public function __construct (iterable $content = [], ?iterable $header = NULL, ?iterable $footer = NULL) {
 		parent::__construct($this->tag);
 
 		if (!empty($header)) {
@@ -43,7 +40,6 @@ class Table extends Element {
 			$table_rows->set($index, $this->tableRow($row));
 		}
 		$this->setBody($table_rows);
-
 	}
 
 	public function caption(string $text, array $attributes = []) {

@@ -89,6 +89,13 @@ interface MarkupInterface extends Serializable, JsonSerializable, Renderable {
 	public function attr(string $attr, $val = NULL);
 
 	/**
+	 * @param iterable $attributes
+	 *
+	 * @return $this
+	 */
+	public function attributes(iterable $attributes);
+
+	/**
 	 * Renders an HTML element as string.
 	 *
 	 * @return string

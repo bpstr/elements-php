@@ -10,6 +10,14 @@ namespace Bpstr\Elements\Html;
  */
 class Heading extends Element {
 
+	public static function create(string $tag, $content = NULL, iterable $attributes = []) {
+		$size = preg_match('/^h([1-6])$/', $tag, $matches) ? (int) $matches[1] : 1;
+		$heading = new static($content, $size);
+		$heading->setTag($tag);
+		$heading->attributes($attributes);
+		return $heading;
+	}
+
 	public static function build($size, $content = NULL, iterable $attributes = []): Heading {
 		$heading = new static($content, $size);
 		$heading->attributes($attributes);
@@ -27,7 +35,9 @@ class Heading extends Element {
 		$tag = "h$size";
 		parent::__construct($tag);
 
-		$this->appendContent($content);
+		if ($content !== NULL) {
+			$this->appendContent($content);
+		}
 	}
 
 }

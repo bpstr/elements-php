@@ -3,6 +3,7 @@
 namespace Bpstr\Elements\Html;
 
 use Bpstr\Elements\Base\ElementInterface;
+use Bpstr\Elements\Base\Variants\TargetableElement;
 
 /**
  * Form HTML element class for elements-php.
@@ -10,11 +11,7 @@ use Bpstr\Elements\Base\ElementInterface;
  *
  * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
  */
-class Form extends Element {
-	const TARGET_SELF = '_self';
-	const TARGET_BLANK = '_blank';
-	const TARGET_PARENT = '_parent';
-	const TARGET_TOP = '_top';
+class Form extends TargetableElement {
 
 	const METHOD_GET = 'GET';
 	const METHOD_POST = 'POST';
@@ -39,28 +36,27 @@ class Form extends Element {
 	 */
 	public function __construct(string $action, string $method = self::METHOD_GET) {
 		parent::__construct($this->tag);
-
 		$this->attr('action', $action);
-		$this->attr('method', $method);
+		$this->method($method);
 	}
 
-	public function novalidate(): self {
-		$this->attr('novalidate', TRUE);
+	public function method(string $method = self::METHOD_GET) {
+		$this->attr('method', $method);
 		return $this;
 	}
 
-	public function autocomplete(bool $state) {
+	public function novalidate(bool $state = TRUE): self {
+		$this->attr('novalidate', $state);
+		return $this;
+	}
+
+	public function autocomplete(bool $state = TRUE) {
 		$this->attr('autocomplete', $state ? 'on' : 'off');
 		return $this;
 	}
 
 	public function enctype(string $mime) {
 		$this->attr('enctype', $mime);
-		return $this;
-	}
-
-	public function target(string $str) {
-		$this->attr('target', $str);
 		return $this;
 	}
 

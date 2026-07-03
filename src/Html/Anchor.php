@@ -1,6 +1,8 @@
 <?php
 
-namespace Bpstr\Elements\Html;
+namespace bpstr\Elements\Html;
+
+use bpstr\Elements\Base\Variants\TargetableElement;
 
 /**
  * Anchor HTML element class for Bootstrap components.
@@ -9,50 +11,33 @@ namespace Bpstr\Elements\Html;
  * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
  */
 class Anchor extends Element {
+
 	const TARGET_SELF = '_self';
 	const TARGET_BLANK = '_blank';
 	const TARGET_PARENT = '_parent';
 	const TARGET_TOP = '_top';
-
 	/**
-	 * @var string
-	 */
-	protected $tag = 'a';
-
-	/**
-	 * @var string
-	 */
-	protected $href;
-
-	/**
-	 * @param $href
-	 * @param null $content
+	 * @param string $href
+	 * @param mixed|null $content
 	 * @param iterable $attributes
 	 *
 	 * @return \Bpstr\Elements\Html\Anchor
 	 */
-	public static function build($href, $content = NULL, iterable $attributes = []) {
-		$element = new static($href);
-		$element->content(self::CKEY_DEFAULT_CONTENT, $content)->attributes($attributes);
-		return $element;
+	public static function build(string $href, $content = NULL, iterable $attributes = []) {
+		$anchor = new static();
+		$anchor->href($href);
+		$anchor->prepareContent($content);
+		$anchor->attributes($attributes);
+		return $anchor;
 	}
 
 	/**
 	 * Anchor constructor.
 	 *
-	 * @param string $href
-	 * @param null $target
+	 * @param string $tag
 	 */
-	public function __construct (string $href, $target = NULL) {
-		parent::__construct($this->tag);
-
-		if ($href !== NULL) {
-			$this->href($href);
-		}
-
-		if ($target !== NULL) {
-			$this->target($target);
-		}
+	public function __construct (string $tag = 'a') {
+		parent::__construct($tag);
 	}
 
 	public function href(string $str) {

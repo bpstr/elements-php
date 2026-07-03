@@ -15,6 +15,14 @@ use Bpstr\Elements\Base\Markup;
  * @todo Prepared documents
  */
 class Document extends Markup implements DocumentInterface {
+	const DEFAULT_DOCTYPE = '<!DOCTYPE html>';
+
+	const CKEY_DEFAULT_HEAD = 0xA0000;
+	const CKEY_DEFAULT_BOTTOM = 0xFF0000;
+
+	public static function build(string $title, $content = NULL, iterable $attributes = []) {
+		return static::create($title, $content, $attributes);
+	}
 
 	public static function create(string $title, $content = NULL, iterable $attributes = []) {
 		$markup = new static();
@@ -33,22 +41,22 @@ class Document extends Markup implements DocumentInterface {
 		return $markup;
 	}
 
-	public function __construct(string $lang = 'en', $charset='utf-8') {
+	public function __construct(string $doctype = self::DEFAULT_DOCTYPE, $lang = 'en', $charset = 'utf-8') {
 		parent::__construct('html');
-		$this->before = '<!DOCTYPE html>';
-		$this->content('head', Markup::create('head'));
-		$this->content('body', Markup::create('body'));
+		$this->before = $doctype;
+		$this->content(self::CKEY_DEFAULT_HEAD, Markup::create('head'));
+		$this->content(self::CKEY_DEFAULT_CONTENT, Markup::create('body'));
 		$this->attr('lang', $lang);
 		$this->head('charset', Element::create('meta')->attr('charset', $charset));
 	}
 
 	public function title($content) {
-		$this->contents['head']->content('title', Element::create('title', $content));
+		$this->contents[self::CKEY_DEFAULT_HEAD]->content('title', Element::create('title', $content));
 		return $this;
 	}
 
 	public function head($key, $content) {
-		$this->contents['head']->content($key, $content);
+		$this->contents[self::CKEY_DEFAULT_HEAD]->content($key, $content);
 		return $this;
 	}
 
@@ -99,7 +107,7 @@ class Document extends Markup implements DocumentInterface {
 	}
 
 	public function body($key, $content) {
-		$this->contents['body']->content($key, $content);
+		$this->contents[self::CKEY_DEFAULT_CONTENT]->content($key, $content);
 		return $this;
 	}
 

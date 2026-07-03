@@ -148,6 +148,26 @@ final class ElementAttributeTest extends TestCase {
 		);
 	}
 
+	public function testElementMultipleStylesFromAttribute() {
+		$div = Element::create('div', 'Loripsum.');
+		$div->setAttribute('style', 'color: white; font-weight: bold;');
+
+		$this->assertSame(
+			'<div style="color: white; font-weight: bold;">Loripsum.</div>',
+			(string) $div
+		);
+	}
+
+	public function testElementStyleAttributeWithColonValue() {
+		$div = Element::create('div', 'Loripsum.');
+		$div->setAttribute('style', 'background-image: url(http://example.com/image.png);');
+
+		$this->assertSame(
+			'<div style="background-image: url(http://example.com/image.png);">Loripsum.</div>',
+			(string) $div
+		);
+	}
+
 	public function testElementStyleMethods() {
 		$div = Element::create('div', 'Loripsum.');
 		$div->style('width', '15%');

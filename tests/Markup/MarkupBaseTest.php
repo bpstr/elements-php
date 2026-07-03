@@ -18,4 +18,13 @@ final class MarkupBaseTest extends TestCase {
 		);
 	}
 
+	public function testMarkupSerialization(): void {
+		$markup = Markup::create('document', Markup::create('title', 'Lorem ipsum.'), ['created' => '2019-10-19']);
+
+		$this->assertSame(
+			'<document created="2019-10-19"><title>Lorem ipsum.</title></document>',
+			(string) unserialize(serialize($markup))
+		);
+	}
+
 }

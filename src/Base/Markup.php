@@ -186,9 +186,24 @@ class Markup implements MarkupInterface {
 
 	public function unserialize($string): void {
 		$unserialized = unserialize($string);
-		$this->tag($unserialized['tag']);
+		$this->__unserialize($unserialized);
 	}
 
+	public function __serialize(): array {
+		return $this->serialize();
+	}
+
+	public function __unserialize(array $data): void {
+		$this->tag($data['tag']);
+		$this->contents = $data['content'] ?? [];
+		$this->attributes = $data['attributes'] ?? [];
+		$relations = $data['relations'] ?? [];
+		$this->before = $relations['before'] ?? NULL;
+		$this->after = $relations['after'] ?? NULL;
+		$this->wrap = $relations['wrap'] ?? NULL;
+	}
+
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return $this->serialize();
 	}

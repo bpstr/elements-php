@@ -25,4 +25,16 @@ final class InputTest extends TestCase {
 		$input = Input::password('random', 'words');
 		$this->assertSame('<input type="password" name="random" value="words" />', (string) $input);
 	}
+
+	public function testMagicMethodFallsBackToText(): void {
+		$input = Input::unknown('random', 'words');
+
+		$this->assertSame('<input type="text" name="random" value="words" />', (string) $input);
+	}
+
+	public function testTypeAcceptsHtmlTypeValues(): void {
+		$input = new Input(Input::TYPE_DATETIME, 'starts_at');
+
+		$this->assertSame('<input type="datetime-local" name="starts_at" />', (string) $input);
+	}
 }

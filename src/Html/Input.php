@@ -76,7 +76,7 @@ class Input extends Element {
 	 * @return \Bpstr\Elements\Html\Input
 	 */
 	public static function __callStatic($type, $arguments) {
-		if (constant(sprintf('%s::TYPE_%s', static::class, strtoupper($type))) === NULL) {
+		if (!static::isValidType($type)) {
 			$type = self::TYPE_TEXT;
 		}
 		return new static($type, ...$arguments);
@@ -105,11 +105,26 @@ class Input extends Element {
 	}
 
 	public function type ($type) {
-		if (constant(sprintf('%s::TYPE_%s', static::class, strtoupper($type))) === NULL) {
+		if (!static::isValidType($type)) {
 			$type = self::TYPE_TEXT;
 		}
 		$this->attr('type', $type);
 		return $this;
+	}
+
+	protected static function isValidType(string $type): bool {
+		if (defined(sprintf('%s::TYPE_%s', static::class, strtoupper(str_replace('-', '_', $type))))) {
+			return true;
+		}
+
+		$reflection = new \ReflectionClass(static::class);
+		foreach ($reflection->getConstants() as $name => $value) {
+			if (strpos($name, 'TYPE_') === 0 && $value === $type) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

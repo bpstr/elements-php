@@ -50,5 +50,36 @@ final class DocumentTest extends TestCase {
 		);
 	}
 
+	public function testDocumentStylesheet(): void {
+		$document = Document::create('HTML5');
+
+		$this->assertSame($document, $document->stylesheet('/app.css'));
+
+		$this->assertSame(
+			'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>HTML5</title><link rel="stylesheet" type="text/css" href="/app.css" /></head><body></body></html>',
+			(string) $document
+		);
+	}
+
+	public function testDocumentJavascriptInHead(): void {
+		$document = Document::create('HTML5');
+
+		$this->assertSame($document, $document->javascript('/app.js', 'head', ['defer' => true]));
+
+		$this->assertSame(
+			'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>HTML5</title><script src="/app.js" defer="defer"></script></head><body></body></html>',
+			(string) $document
+		);
+	}
+
+	public function testDocumentJavascriptInBody(): void {
+		$document = Document::create('HTML5');
+		$document->javascript('/app.js', 'body');
+
+		$this->assertSame(
+			'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>HTML5</title></head><body><script src="/app.js"></script></body></html>',
+			(string) $document
+		);
+	}
 
 }

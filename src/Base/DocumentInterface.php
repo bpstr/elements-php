@@ -10,9 +10,9 @@ interface DocumentInterface extends MarkupInterface {
 
 	public function meta(string $name, $content);
 
-	public function stylesheet(string $href, ?string $media);
+	public function stylesheet(string $href, ?string $media = NULL);
 
-	public function javascript();
+	public function javascript(string $src = NULL, string $location = 'head', iterable $attributes = []);
 
 	public function body($key, $content);
 

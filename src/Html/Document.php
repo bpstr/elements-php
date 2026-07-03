@@ -67,7 +67,7 @@ class Document extends Markup implements DocumentInterface {
 	 *
 	 * @link https://www.w3.org/TR/html401/present/styles.html
 	 */
-	public function stylesheet(string $href, ?string $media) {
+	public function stylesheet(string $href, ?string $media = NULL) {
 		$stylesheet = Element::create('link')->attributes(
 			[
 				'rel' => 'stylesheet',
@@ -81,10 +81,22 @@ class Document extends Markup implements DocumentInterface {
 		}
 
 		$this->head($href, $stylesheet);
+		return $this;
 	}
 
-	public function javascript() {
+	public function javascript(string $src = NULL, string $location = 'head', iterable $attributes = []) {
+		if ($src === NULL) {
+			return $this;
+		}
 
+		$script = Element::create('script', NULL, ['src' => $src])->attributes($attributes);
+		$key = sprintf('javascript.%s', $src);
+
+		if ($location === 'body') {
+			return $this->body($key, $script);
+		}
+
+		return $this->head($key, $script);
 	}
 
 	public function body($key, $content) {
